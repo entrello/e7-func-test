@@ -1,0 +1,164 @@
+name: newman staging test
+on:
+  workflow_call:
+    secrets:
+      POSTMAN_API_KEY:
+        description: 'Your Postman API Key'
+        required: true
+        
+jobs:
+  newman-staging-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: setup
+        run: |
+          echo POSTMAN_STAGING_ENVIRONMENT_UID=8335769-71b897a7-0821-48d8-8f65-a5fa7a721ee1 >> $GITHUB_ENV
+
+          echo SIGNUP_AND_LOGIN=8335769-200f3c23-6d6c-4857-9f28-65c3a69a8859 >> $GITHUB_ENV
+          echo CREATE_EVENT_WITH_SEATING_PLAN=8335769-0a214037-d460-41a9-971f-022527c1f342 >> $GITHUB_ENV
+          echo BEST_SEAT_OFFER_PLAN_1=8335769-93268606-9e2b-4eea-9ed1-82b934a8efb0 >> $GITHUB_ENV
+          echo BEST_SEAT_OFFER_PLAN_2=17747573-6e40140c-0388-4acb-8970-387c0a45f19f >> $GITHUB_ENV
+          echo EVENT_STATUS_NON_SPF=8335769-f1926317-7c1f-459b-a649-fa6aa69010bf >> $GITHUB_ENV
+          echo DEALS_ORG_WIDE_SETTINGS=8335769-effeee6d-8cab-4786-b726-1430bedc7795 >> $GITHUB_ENV
+          echo INVITE_USERS_TO_ORG=17747573-5b327004-4d88-4ba1-bc96-37879bedef79 >> $GITHUB_ENV
+          echo LOCATIONS=8335769-0d72c841-4c25-437f-bb7e-89164473900a >> $GITHUB_ENV
+          echo MANAGE_EVENT_DEALS=8335769-a887c97e-7a96-420e-849f-3a04f7fbcb08 >> $GITHUB_ENV
+          echo MEDIA_FILES=81581-f0bdb278-ce43-4cf9-b90b-e31cf1c1d959 >> $GITHUB_ENV
+          echo STATS=17582736-66d4228f-94c5-499b-b64c-5a3e4ff8b09b >> $GITHUB_ENV
+          echo TAXGROUP_ORG_WIDE_SETTINGS=8335769-f0a95185-c36f-4475-969a-76dfeff50a05 >> $GITHUB_ENV
+          echo ORG_FIELDS=8335769-4502da6d-acd8-4a3b-bdf7-37202817c450 >> $GITHUB_ENV
+          echo CLAIM_TICKETS_CREATE_ORDER_ADMIN=8335769-ac2e5786-b160-4d6c-b18c-4765b0438035 >> $GITHUB_ENV
+          echo UPDATEORDER_ATTRIBUTES=8335769-a1a89b96-a053-4ea1-81c1-ed0ff657fb3d >> $GITHUB_ENV
+          echo UPDATEORDERCONTACT=8335769-bc772baf-1f48-44fc-8502-0bc50f624819 >> $GITHUB_ENV
+
+      - name: execute 001 Signup and Login
+        uses: matt-ball/newman-action@master
+        if: always()
+        with:
+          apiKey: ${{ secrets.POSTMAN_API_KEY }}
+          collection: ${{ env.SIGNUP_AND_LOGIN }}
+          environment: ${{ env.POSTMAN_STAGING_ENVIRONMENT_UID }}
+          reporter: '["htmlextra","cli"]'
+
+      - name: execute 002 Create Event with SeatingPlan
+        uses: matt-ball/newman-action@master
+        if: always()
+        with:
+          apiKey: ${{ secrets.POSTMAN_API_KEY }}
+          collection: ${{ env.CREATE_EVENT_WITH_SEATING_PLAN }}
+          environment: ${{ env.POSTMAN_STAGING_ENVIRONMENT_UID }}
+
+      - name: execute 003 BestSeat Offer Plan 1
+        uses: matt-ball/newman-action@master
+        if: always()
+        with:
+          apiKey: ${{ secrets.POSTMAN_API_KEY }}
+          collection: ${{ env.BEST_SEAT_OFFER_PLAN_1 }}
+          environment: ${{ env.POSTMAN_STAGING_ENVIRONMENT_UID }}
+
+      - name: execute 003 BestSeat Offer Plan 2
+        uses: matt-ball/newman-action@master
+        if: always()
+        with:
+          apiKey: ${{ secrets.POSTMAN_API_KEY }}
+          collection: ${{ env.BEST_SEAT_OFFER_PLAN_2 }}
+          environment: ${{ env.POSTMAN_STAGING_ENVIRONMENT_UID }}
+
+      - name: execute 004 Event STATUS (non-spf)
+        uses: matt-ball/newman-action@master
+        if: always()
+        with:
+          apiKey: ${{ secrets.POSTMAN_API_KEY }}
+          collection: ${{ env.EVENT_STATUS_NON_SPF }}
+          environment: ${{ env.POSTMAN_STAGING_ENVIRONMENT_UID }}
+
+      - name: execute 006 Deals org-wide settings
+        uses: matt-ball/newman-action@master
+        if: always()
+        with:
+          apiKey: ${{ secrets.POSTMAN_API_KEY }}
+          collection: ${{ env.DEALS_ORG_WIDE_SETTINGS }}
+          environment: ${{ env.POSTMAN_STAGING_ENVIRONMENT_UID }}
+
+      - name: execute 007 invite Users to Org
+        uses: matt-ball/newman-action@master
+        if: always()
+        with:
+          apiKey: ${{ secrets.POSTMAN_API_KEY }}
+          collection: ${{ env.INVITE_USERS_TO_ORG }}
+          environment: ${{ env.POSTMAN_STAGING_ENVIRONMENT_UID }}
+
+      - name: execute 008 Locations
+        uses: matt-ball/newman-action@master
+        if: always()
+        with:
+          apiKey: ${{ secrets.POSTMAN_API_KEY }}
+          collection: ${{ env.LOCATIONS }}
+          environment: ${{ env.POSTMAN_STAGING_ENVIRONMENT_UID }}
+
+      - name: execute 009 Manage Event Deals
+        uses: matt-ball/newman-action@master
+        if: always()
+        with:
+          apiKey: ${{ secrets.POSTMAN_API_KEY }}
+          collection: ${{ env.MANAGE_EVENT_DEALS }}
+          environment: ${{ env.POSTMAN_STAGING_ENVIRONMENT_UID }}
+
+      - name: execute 010 Media Files
+        uses: matt-ball/newman-action@master
+        if: always()
+        with:
+          apiKey: ${{ secrets.POSTMAN_API_KEY }}
+          collection: ${{ env.MEDIA_FILES }}
+          environment: ${{ env.POSTMAN_STAGING_ENVIRONMENT_UID }}
+
+      - name: execute 011 Stats
+        uses: matt-ball/newman-action@master
+        if: always()
+        with:
+          apiKey: ${{ secrets.POSTMAN_API_KEY }}
+          collection: ${{ env.STATS }}
+          environment: ${{ env.POSTMAN_STAGING_ENVIRONMENT_UID }}
+
+      - name: execute 012 TaxGroup org-wide settings
+        uses: matt-ball/newman-action@master
+        if: always()
+        with:
+          apiKey: ${{ secrets.POSTMAN_API_KEY }}
+          collection: ${{ env.TAXGROUP_ORG_WIDE_SETTINGS }}
+          environment: ${{ env.POSTMAN_STAGING_ENVIRONMENT_UID }}
+
+      - name: execute 013 Org fields
+        uses: matt-ball/newman-action@master
+        if: always()
+        with:
+          apiKey: ${{ secrets.POSTMAN_API_KEY }}
+          collection: ${{ env.ORG_FIELDS }}
+          environment: ${{ env.POSTMAN_STAGING_ENVIRONMENT_UID }}
+
+      - name: execute 101 Claim Tickets Create Order (admin)
+        uses: matt-ball/newman-action@master
+        if: always()
+        with:
+          apiKey: ${{ secrets.POSTMAN_API_KEY }}
+          collection: ${{ env.CLAIM_TICKETS_CREATE_ORDER_ADMIN }}
+          environment: ${{ env.POSTMAN_STAGING_ENVIRONMENT_UID }}
+
+      - name: execute 102 UpdateOrder Attributes
+        uses: matt-ball/newman-action@master
+        if: always()
+        with:
+          apiKey: ${{ secrets.POSTMAN_API_KEY }}
+          collection: ${{ env.UPDATEORDER_ATTRIBUTES }}
+          environment: ${{ env.POSTMAN_STAGING_ENVIRONMENT_UID }}
+
+      - name: execute 103 UpdateOrderContact
+        uses: matt-ball/newman-action@master
+        if: always()
+        with:
+          apiKey: ${{ secrets.POSTMAN_API_KEY }}
+          collection: ${{ env.UPDATEORDERCONTACT }}
+          environment: ${{ env.POSTMAN_STAGING_ENVIRONMENT_UID }}
